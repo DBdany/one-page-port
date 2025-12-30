@@ -11,7 +11,7 @@ const socialLinks = [
 export default function About() {
   return (
     <>
-    <section className="col-span-1 pb-8 px-8 pt-4 h-full text-foreground shadow border-l border-white/10 overflow-y-auto">
+    <section className="col-span-1 pb-8 px-8 pt-4 min-h-fit md:h-full text-foreground shadow border-l border-white/10 md:overflow-y-auto">
       <h2 className="text-xl font-semibold font-orbitron mb-2 text-purple-200">About</h2>
 
       {/* Flex container to align image and text side by side */}
@@ -26,7 +26,7 @@ export default function About() {
         />
 
         {/* Text next to the image */}
-        <p className='font-plexmono text-sm'>Dany is a full stack software developer specialized in UI/UX systems<br/><br/>She also likes to draw and play TTRPGs</p>
+        <p className='font-plexmono text-sm'>Dany is a full stack software developer specialized in UI/UX systems<br/></p>
       </div>
 
       {/* Social Links & My Art Button */}

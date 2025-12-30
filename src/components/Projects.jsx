@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion'; // Importing Framer Motion
+import { motion, AnimatePresence } from 'framer-motion';
 
 const imageVariants = {
   hidden: { opacity: 0 },
@@ -14,13 +14,13 @@ const imageVariants = {
   }
 };
 
-export default function Projects({ setSelectedProject,  }) {
+export default function Projects({ setSelectedProject }) {
   const projects = [
 
     {
       title: 'vers1ons',
       description: 'A community for musicians and visual artists',
-      image: 'https://res.cloudinary.com/dyanabutler/image/upload/v1737496386/ARC-H1VE_LOGO_t1nsqj.png',
+      image: '/vers1ons.png',
       services: ['Web Development', 'Digital Art', 'Animation'],
       stack: ['Next.js', 'Procreate', 'Typescript', ],
       github: "https://github.com/your-project",
@@ -81,15 +81,19 @@ export default function Projects({ setSelectedProject,  }) {
   ];
 
   const [activeIndex, setActiveIndex] = useState(null);
+  const [mobileDrawerProject, setMobileDrawerProject] = useState(null);
 
   const handleProjectClick = (project, index) => {
     setSelectedProject(project);
-    setActiveIndex(activeIndex === index ? null : index); // Toggle the dropdown for the selected project
+    setActiveIndex(activeIndex === index ? null : index);
+    // On mobile, open the drawer
+    if (window.innerWidth < 768) {
+      setMobileDrawerProject(mobileDrawerProject?.title === project.title ? null : project);
+    }
   };
 
-  const dropdownVariants = {
-    hidden: { height: 0, opacity: 0 },
-    visible: { height: 'auto', opacity: 1 },
+  const closeDrawer = () => {
+    setMobileDrawerProject(null);
   };
 
   return (
@@ -104,95 +108,115 @@ export default function Projects({ setSelectedProject,  }) {
               ${activeIndex === index 
                 ? 'md:bg-muted-foreground md:text-black' 
                 : 'hover:bg-black md:hover:bg-slate-900 '
-              } 
-              flex flex-col`}
+              }`}
             onClick={() => handleProjectClick(project, index)}
           >
-            {/* Project Title */}
             <div className="flex justify-between items-center">
               <span className={`font-bold m-6 md:m-4 ${activeIndex === index ? 'md:text-black text-white' : ''}`}>
                 {project.title}
               </span>
               <span className="mr-2">⚝</span>
             </div>
-
-            {/* Mobile dropdown with slide-down animation */}
-            <motion.div
-              className="md:hidden overflow-hidden"
-              initial="hidden"
-              animate={activeIndex === index ? 'visible' : 'hidden'}
-              variants={dropdownVariants}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-            >
-              {activeIndex === index && (
-                <div className="p-4 bg-transparent rounded shadow">
-                  {/* Image and Description */}
-                  <div className="flex flex-col mb-6">
-                    <motion.div
-                      initial="hidden"
-                      animate="visible"
-                      variants={imageVariants}
-                    >
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-auto rounded mb-4"
-                        height="250"
-                        width="250"
-                        loading="eager"
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQrJyEwPENBLzMzLy0zPVBCR0JHMz1DcWl5VGR2h4iIl5eXqqqq+vr6////2wBDAR"
-                      />
-                    </motion.div>
-                    <p className="text-muted-foreground font-plexmono">{project.description}</p>
-                  </div>
-
-                  {/* Services and Stack */}
-                  <div className="grid grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Services</h3>
-                      <ul className="list-inside space-y-1 font-plexmono text-sm">
-                        {project.services.map((service, index) => (
-                          <li key={index}>{service}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Stack</h3>
-                      <ul className="list-inside space-y-1 font-plexmono text-sm">
-                        {project.stack.map((tech, index) => (
-                          <li key={index}>{tech}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* GitHub and Website Links */}
-                  <div className="flex space-x-4 my-4 font-orbitron">
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-indigo-300 hover:underline"
-                    >
-                      <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-               <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z"/>
-              </svg>
-                      Website
-                    </a>
-                  </div>
-                </div>
-              )}
-            </motion.div>
           </li>
         ))}
       </ul>
+
+      {/* Mobile Bottom Sheet Drawer */}
+      <AnimatePresence>
+        {mobileDrawerProject && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="md:hidden fixed inset-0 bg-black/60 z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeDrawer}
+            />
+            
+            {/* Drawer */}
+            <motion.div
+              className="md:hidden fixed bottom-0 left-0 right-0 bg-black border-t border-purple-400 rounded-t-2xl z-50 max-h-[85vh] overflow-y-auto custom-scrollbar"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            >
+              {/* Drag handle */}
+              <div className="sticky top-0 bg-black pt-3 pb-2 flex justify-center">
+                <div className="w-10 h-1 bg-purple-400/50 rounded-full" />
+              </div>
+              
+              <div className="px-6 pb-8">
+                {/* Header with close button */}
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold font-orbitron text-purple-200">
+                    {mobileDrawerProject.title}
+                  </h2>
+                  <button 
+                    onClick={closeDrawer}
+                    className="text-white/60 hover:text-white p-2"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Image */}
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={imageVariants}
+                  className="mb-4"
+                >
+                  <Image
+                    src={mobileDrawerProject.image}
+                    alt={mobileDrawerProject.title}
+                    className="w-full h-auto rounded"
+                    height={500}
+                    width={500}
+                    loading="eager"
+                  />
+                </motion.div>
+
+                {/* Description */}
+                <p className="text-muted-foreground font-plexmono mb-6">
+                  {mobileDrawerProject.description}
+                </p>
+
+                {/* Services and Stack */}
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Services</h3>
+                    <ul className="list-inside space-y-1 font-plexmono text-sm">
+                      {mobileDrawerProject.services.map((service, i) => (
+                        <li key={i}>{service}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Stack</h3>
+                    <ul className="list-inside space-y-1 font-plexmono text-sm">
+                      {mobileDrawerProject.stack.map((tech, i) => (
+                        <li key={i}>{tech}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Website Link */}
+                <a
+                  href={mobileDrawerProject.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center text-sm font-orbitron border border-purple-400 rounded px-4 py-3 hover:bg-purple-600 transition-colors"
+                >
+                  view site →
+                </a>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

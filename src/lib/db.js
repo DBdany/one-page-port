@@ -24,9 +24,17 @@ export async function initGuestbookTable() {
         nickname VARCHAR(50),
         message VARCHAR(100) NOT NULL,
         sticker VARCHAR(50),
+        name_color VARCHAR(7) DEFAULT '#c4b5fd',
         ip_hash VARCHAR(64) NOT NULL,
         created_at TIMESTAMP DEFAULT NOW()
       );
+    `);
+    // Add color columns if they don't exist (for existing tables)
+    await client.query(`
+      ALTER TABLE guestbook ADD COLUMN IF NOT EXISTS name_color VARCHAR(7) DEFAULT '#c4b5fd';
+    `);
+    await client.query(`
+      ALTER TABLE guestbook ADD COLUMN IF NOT EXISTS message_color VARCHAR(7) DEFAULT '#ffffff';
     `);
     tableInitialized = true;
   } finally {

@@ -58,7 +58,7 @@ export default function HomePage() {
 
   return (
     <motion.div 
-      className="md:fixed flex flex-col h-screen"
+      className="md:fixed flex flex-col min-h-screen md:h-screen overflow-y-auto md:overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={containerVariants}

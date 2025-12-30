@@ -5,6 +5,8 @@ export default function Guestbook({ hideTitle = false }) {
   const [entries, setEntries] = useState([]);
   const [nickname, setNickname] = useState('');
   const [message, setMessage] = useState('');
+  const [nameColor, setNameColor] = useState('#c4b5fd');
+  const [messageColor, setMessageColor] = useState('#ffffff');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -43,7 +45,7 @@ export default function Guestbook({ hideTitle = false }) {
       const res = await fetch('/api/guestbook', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, message }),
+        body: JSON.stringify({ nickname, message, nameColor, messageColor }),
       });
 
       const data = await res.json();
@@ -67,19 +69,34 @@ export default function Guestbook({ hideTitle = false }) {
   const wordsRemaining = 15 - wordCount;
 
   return (
-    <div className={`${hideTitle ? '' : 'mt-6'} max-h-64 overflow-y-auto custom-scrollbar`}>
+    <div className={`${hideTitle ? '' : 'mt-6'}`}>
       {!hideTitle && <h3 className="text-base font-semibold font-orbitron mb-3 text-purple-200">Guestbook</h3>}
       
       {/* Submit Form */}
       <form onSubmit={handleSubmit} className="mb-4 space-y-2">
-        <input
-          type="text"
-          placeholder="Nickname (optional)"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          maxLength={50}
-          className="w-full bg-black/50 border border-white/20 rounded px-3 py-1.5 text-sm font-plexmono placeholder:text-white/40 focus:outline-none focus:border-purple-400"
-        />
+        <div className="relative flex items-center">
+          <input
+            type="text"
+            placeholder="Nickname (optional)"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            maxLength={50}
+            style={{ color: nameColor }}
+            className="w-full bg-black/50 border border-white/20 rounded px-3 py-1.5 pr-9 text-sm font-plexmono placeholder:text-white/40 focus:outline-none focus:border-purple-400"
+          />
+          <label className="absolute right-2 cursor-pointer" title="Pick name color">
+            <input
+              type="color"
+              value={nameColor}
+              onChange={(e) => setNameColor(e.target.value)}
+              className="sr-only"
+            />
+            <svg className="w-5 h-5 hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke={nameColor} strokeWidth="2">
+              <circle cx="12" cy="12" r="10" fill={nameColor} fillOpacity="0.3" />
+              <circle cx="12" cy="12" r="5" fill={nameColor} />
+            </svg>
+          </label>
+        </div>
         
         <div className="relative">
           <textarea
@@ -88,8 +105,21 @@ export default function Guestbook({ hideTitle = false }) {
             onChange={(e) => setMessage(e.target.value)}
             rows={2}
             required
-            className="w-full bg-black/50 border border-white/20 rounded px-3 py-1.5 text-sm font-plexmono placeholder:text-white/40 focus:outline-none focus:border-purple-400 resize-none"
+            style={{ color: messageColor }}
+            className="w-full bg-black/50 border border-white/20 rounded px-3 py-1.5 pr-9 text-sm font-plexmono placeholder:text-white/40 focus:outline-none focus:border-purple-400 resize-none"
           />
+          <label className="absolute top-2 right-2 cursor-pointer" title="Pick message color">
+            <input
+              type="color"
+              value={messageColor}
+              onChange={(e) => setMessageColor(e.target.value)}
+              className="sr-only"
+            />
+            <svg className="w-5 h-5 hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke={messageColor} strokeWidth="2">
+              <circle cx="12" cy="12" r="10" fill={messageColor} fillOpacity="0.3" />
+              <circle cx="12" cy="12" r="5" fill={messageColor} />
+            </svg>
+          </label>
           <span className={`absolute bottom-2 right-2 text-xs ${wordsRemaining < 5 ? 'text-red-400' : 'text-white/40'}`}>
             {wordsRemaining} words
           </span>
@@ -107,7 +137,7 @@ export default function Guestbook({ hideTitle = false }) {
       </form>
 
       {/* Entries List */}
-      <div className="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
+      <div className="space-y-2 max-h-[40vh] md:max-h-48 overflow-y-auto custom-scrollbar pr-1">
         {loading ? (
           <p className="text-xs text-white/40 font-plexmono">Loading...</p>
         ) : dbUnavailable ? (
@@ -120,8 +150,8 @@ export default function Guestbook({ hideTitle = false }) {
               <div className="flex items-start gap-2">
                 {entry.sticker && <span className="text-lg">{entry.sticker}</span>}
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs text-purple-300 font-orbitron">{entry.nickname || 'Anonymous'}</p>
-                  <p className="text-sm font-plexmono text-white/80 break-words">{entry.message}</p>
+                  <p className="text-xs font-orbitron" style={{ color: entry.name_color || '#c4b5fd' }}>{entry.nickname || 'Anonymous'}</p>
+                  <p className="text-sm font-plexmono break-words" style={{ color: entry.message_color || '#ffffff' }}>{entry.message}</p>
                 </div>
               </div>
             </div>

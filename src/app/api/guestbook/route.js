@@ -13,7 +13,7 @@ export async function GET() {
     await initGuestbookTable();
     
     const result = await pool.query(
-      'SELECT id, nickname, message, sticker, created_at FROM guestbook ORDER BY created_at DESC LIMIT 50'
+      'SELECT id, nickname, message, sticker, name_color, message_color, created_at FROM guestbook ORDER BY created_at DESC LIMIT 50'
     );
     
     return Response.json({ entries: result.rows });
@@ -33,7 +33,7 @@ export async function POST(request) {
     const ipHash = hashIP(ip);
     
     const body = await request.json();
-    const { nickname, message, sticker } = body;
+    const { nickname, message, sticker, nameColor, messageColor } = body;
     
     // Validate message
     if (!message || typeof message !== 'string') {
@@ -65,10 +65,14 @@ export async function POST(request) {
       }, { status: 429 });
     }
     
+    // Validate colors (must be hex format)
+    const cleanNameColor = /^#[0-9A-Fa-f]{6}$/.test(nameColor) ? nameColor : '#c4b5fd';
+    const cleanMessageColor = /^#[0-9A-Fa-f]{6}$/.test(messageColor) ? messageColor : '#ffffff';
+    
     // Insert the entry
     const result = await pool.query(
-      'INSERT INTO guestbook (nickname, message, sticker, ip_hash) VALUES ($1, $2, $3, $4) RETURNING id, nickname, message, sticker, created_at',
-      [cleanNickname, message.trim(), sticker || null, ipHash]
+      'INSERT INTO guestbook (nickname, message, sticker, name_color, message_color, ip_hash) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, nickname, message, sticker, name_color, message_color, created_at',
+      [cleanNickname, message.trim(), sticker || null, cleanNameColor, cleanMessageColor, ipHash]
     );
     
     return Response.json({ entry: result.rows[0] }, { status: 201 });
