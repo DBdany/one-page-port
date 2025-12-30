@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Details from "@/components/Details";
+import { GridBackground } from "@/components/GridBackground";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -57,13 +58,16 @@ export default function HomePage() {
   };
 
   return (
-    <motion.div 
-      className="md:fixed flex flex-col min-h-screen md:h-screen overflow-y-auto md:overflow-hidden"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      {/* Header with fade-in */}
+    <>
+      <GridBackground variant="square" size={16} opacity={0.08} maskType="breathing" />
+      
+      <motion.div 
+        className="md:fixed flex flex-col min-h-screen md:h-screen overflow-y-auto md:overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        {/* Header with fade-in */}
       <motion.div variants={sectionVariants}>
         <Header />
       </motion.div>
@@ -95,5 +99,6 @@ export default function HomePage() {
       </div>
 
     </motion.div>
+    </>
   );
 }

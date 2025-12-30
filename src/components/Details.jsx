@@ -8,7 +8,7 @@ export default function Details({ selectedProject }) {
 
   return (
     <section
-      className="hidden md:block col-span-1 bg-black text-foreground pb-8 px-8 pt-4  h-full"
+      className="hidden md:block col-span-1 bg-black/80 backdrop-blur-sm text-foreground pb-8 px-8 pt-4  h-full"
     
     >
      <h2 className="text-xl font-semibold font-orbitron mb-2 text-purple-200">Details</h2>

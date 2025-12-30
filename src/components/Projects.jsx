@@ -84,11 +84,13 @@ export default function Projects({ setSelectedProject }) {
   const [mobileDrawerProject, setMobileDrawerProject] = useState(null);
 
   const handleProjectClick = (project, index) => {
-    setSelectedProject(project);
-    setActiveIndex(activeIndex === index ? null : index);
-    // On mobile, open the drawer
+    const isClosing = activeIndex === index;
+    setActiveIndex(isClosing ? null : index);
+    setSelectedProject(isClosing ? null : project);
+    
+    // On mobile, open/close the drawer
     if (window.innerWidth < 768) {
-      setMobileDrawerProject(mobileDrawerProject?.title === project.title ? null : project);
+      setMobileDrawerProject(isClosing ? null : project);
     }
   };
 
