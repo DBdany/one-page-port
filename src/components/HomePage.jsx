@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Details from "@/components/Details";
-import Footer from "./Footer";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -95,10 +94,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Footer with fade-in */}
-      <motion.div variants={sectionVariants}>
-        <Footer />
-      </motion.div>
     </motion.div>
   );
 }

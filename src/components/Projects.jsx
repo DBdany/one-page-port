@@ -18,7 +18,7 @@ export default function Projects({ setSelectedProject,  }) {
   const projects = [
 
     {
-      title: 'ARC-H1VE',
+      title: 'vers1ons',
       description: 'A community for musicians and visual artists',
       image: 'https://res.cloudinary.com/dyanabutler/image/upload/v1737496386/ARC-H1VE_LOGO_t1nsqj.png',
       services: ['Web Development', 'Digital Art', 'Animation'],
@@ -28,7 +28,7 @@ export default function Projects({ setSelectedProject,  }) {
       bgColor: '#000'
     },
     {
-      title: 'VOICE by iAccess Life',
+      title: 'Voice by iAccess Life',
       description: 'The tech-driven feedback solution for accessibility',
       image: '/voice.svg',
       services: ['UI/UX Design', 'Web Development', 'Branding'],
@@ -38,7 +38,7 @@ export default function Projects({ setSelectedProject,  }) {
       bgColor: '#000',
     },
     {
-      title: 'YARN ODYSSEY by NOVA',
+      title: 'Yarn Odyssey by NOVA',
       description: 'An online store showcasing Novas crochet creations.',
       image: 'https://res.cloudinary.com/dyanabutler/image/upload/v1728506646/yarn-odyssey-banner_nn85p7.png',
       services: ['Social Media', 'Marketing', 'Product Management'],
@@ -58,18 +58,7 @@ export default function Projects({ setSelectedProject,  }) {
       bgColor: '#000'
     },
     {
-      title: 'CYGOTH CLUB',
-      description: 'My take on creating an NFT collection',
-      image: 'https://res.cloudinary.com/dyanabutler/image/upload/v1728506644/cygoth-club-banner_c52oxe.png',
-      services: ['Web Development', 'Digital Art', 'Cartoonist'],
-      stack: ['Next.js', 'Procreate', 'OpenSea', ],
-      github: "https://github.com/your-project",
-      website: "https://cygoth.io",
-      bgColor: '#1a202c'
-    },
-    
-    {
-      title: 'MBIANCHINI.ART',
+      title: 'mbianchini.art',
       description: 'A personal portfolio for a distinctive traditional mixed-media artist',
       image: 'https://res.cloudinary.com/dyanabutler/image/upload/v1728506645/mbianchini-banner_z5qklj.png',
       services: ['UI/UX Design', 'Web Development', 'Videographer'],
@@ -80,7 +69,7 @@ export default function Projects({ setSelectedProject,  }) {
     },
 
     {
-      title: 'DUKEMEDIA.CO',
+      title: 'dukemedia.co',
       description: 'A portfolio for a cool videographer, photographer, and filmmaker',
       image: 'https://res.cloudinary.com/dyanabutler/image/upload/v1728506644/duke-media-banner_ajdfxi.png',
       services: ['Website Development', 'UI/UX Design', 'Wireframing'],
@@ -105,7 +94,7 @@ export default function Projects({ setSelectedProject,  }) {
 
   return (
     <section className="col-span-1 text-foreground shadow  pb-8 px-8 border-purple-200 h-full">
-      <h2 className="text-xl font-semibold text-purple-200 font-orbitron m-4">PROJECTS</h2>
+      <h2 className="text-xl font-semibold text-purple-200 font-orbitron m-4">Projects</h2>
 
       <ul>
         {projects.map((project, index) => (
@@ -161,7 +150,7 @@ export default function Projects({ setSelectedProject,  }) {
                   {/* Services and Stack */}
                   <div className="grid grid-cols-2 gap-6 mb-6">
                     <div>
-                      <h3 className="mb-2 text-purple-200 font-orbitron text-md">Services</h3>
+                      <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Services</h3>
                       <ul className="list-inside space-y-1 font-plexmono text-sm">
                         {project.services.map((service, index) => (
                           <li key={index}>{service}</li>
@@ -169,7 +158,7 @@ export default function Projects({ setSelectedProject,  }) {
                       </ul>
                     </div>
                     <div>
-                      <h3 className="mb-2 text-purple-200 font-orbitron text-md">Stack</h3>
+                      <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Stack</h3>
                       <ul className="list-inside space-y-1 font-plexmono text-sm">
                         {project.stack.map((tech, index) => (
                           <li key={index}>{tech}</li>

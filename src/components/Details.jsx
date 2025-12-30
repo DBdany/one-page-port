@@ -11,7 +11,7 @@ export default function Details({ selectedProject }) {
       className="hidden md:block col-span-1 bg-black text-foreground pb-8 px-8 pt-4  h-full"
     
     >
-     <h2 className="text-xl font-semibold font-orbitron mb-2 text-purple-200">DETAILS</h2>
+     <h2 className="text-xl font-semibold font-orbitron mb-2 text-purple-200">Details</h2>
      <div className="h-full flex flex-col">
         {/* Scrollable content */}
         <div className="flex-grow max-h-[55vh] custom-scrollbar overflow-y-auto">
@@ -30,14 +30,14 @@ export default function Details({ selectedProject }) {
           </div>
 
           {/* Description (underneath the image) */}
-          <p className="text-md mb-4 ">{selectedProject.description}</p>
+          <p className="text-sm font-plexmono mb-4">{selectedProject.description}</p>
 
           {/* Services and Stack */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Services */}
             <div>
-              <h3 className="text-md md:text-lg font-semibold mb-2 font-orbitron text-purple-200">Services</h3>
-              <ul className=" list-inside space-y-1 text-sm  font-plexmono">
+              <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Services</h3>
+              <ul className="list-inside font-plexmono text-sm space-y-2">
                 {selectedProject.services.map((service, index) => (
                   <li key={index}>{service}</li>
                 ))}
@@ -46,8 +46,8 @@ export default function Details({ selectedProject }) {
 
             {/* Stack */}
             <div>
-              <h3 className="text-md md:text-lg font-semibold mb-2 font-orbitron text-purple-200">Stack</h3>
-              <ul className=" list-inside space-y-1 text-sm  font-plexmono">
+              <h3 className="text-base font-semibold font-orbitron mb-2 text-purple-200">Stack</h3>
+              <ul className="list-inside font-plexmono text-sm space-y-2">
                 {selectedProject.stack.map((tech, index) => (
                   <li key={index}>{tech}</li>
                 ))}
@@ -58,7 +58,7 @@ export default function Details({ selectedProject }) {
 
         {/* Links (GitHub and Website) */}
         <div className="font-orbitron bg-transparent">
-          <div className="flex space-x-2 ">
+          <div className="flex justify-end">
             {/* GitHub link with SVG */}
             {/* <a
               href={selectedProject.github}
@@ -88,18 +88,9 @@ export default function Details({ selectedProject }) {
               href={selectedProject.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center  text-blue-400  hover:text-indigo-600"
+              className="text-sm font-orbitron border border-purple-400 rounded px-3 py-1 hover:bg-purple-600 transition-colors"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-               <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z"/>
-              </svg>
-              Check out the Website
+              view site →
             </a>
           </div>
         </div>

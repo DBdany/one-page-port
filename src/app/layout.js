@@ -5,7 +5,7 @@ const orbitron = Orbitron({ subsets: ["latin"], weight: "800", variable: '--font
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 
 export const metadata = {
-  title: "Dyana Design",
+  title: "dany's web",
   description: "web developer, designer, artist, webflow",
   icons: {
     icon: '/favicon.ico', 
